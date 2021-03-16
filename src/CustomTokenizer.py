@@ -8,7 +8,7 @@ TOP_K = 20000
 # Limit on the length of text sequences.
 # Sequences longer than this will be truncated.
 # and less than it will be padded
-MAX_SEQUENCE_LENGTH = 50
+MAX_SEQUENCE_LENGTH = 30
 
 
 class CustomTokenizer:
@@ -24,12 +24,11 @@ class CustomTokenizer:
         # Create vocabulary with training texts.
         self.tokenizer.fit_on_texts(self.train_texts)
 
-    def vectorize_input(self, tweets):
-        # Vectorize training and validation texts.
+    def vectorize_input(self, input):
 
-        tweets = self.tokenizer.texts_to_sequences(tweets)
+        input = self.tokenizer.texts_to_sequences(input)
         # Fix sequence length to max value. Sequences shorter than the length are
         # padded in the beginning and sequences longer are truncated
         # at the beginning.
-        tweets = sequence.pad_sequences(tweets, maxlen=self.max_length, truncating='post', padding='post')
-        return tweets
+        output = sequence.pad_sequences(input, maxlen=self.max_length, truncating='post', padding='post')
+        return output
